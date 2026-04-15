@@ -1,0 +1,148 @@
+<div class="dashboard-wrapper">
+  <aside class="main-sidebar">
+    <div class="sidebar-header">
+      <div class="university-badge">
+        <span class="univ-icon">🏛️</span>
+        <div class="univ-text">
+          <span class="univ-name">FSTSBZ</span>
+          <span class="univ-sub">Université de Kairouan</span>
+        </div>
+      </div>
+      <div class="logo-area">
+        <span class="logo-icon">📝</span>
+        <span class="logo-text">PFE Manager</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-item active">
+        <span class="icon">📊</span>
+        <span class="nav-text">Tableau de bord</span>
+      </a>
+      <a class="nav-item">
+        <span class="icon">📁</span>
+        <span class="nav-text">Mes Projets</span>
+      </a>
+      <a class="nav-item">
+        <span class="icon">🔔</span>
+        <span class="nav-text">Notifications</span>
+        <span class="count-badge">3</span>
+      </a>
+      <a class="nav-item">
+        <span class="icon">⚙️</span>
+        <span class="nav-text">Paramètres</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button (click)="onLogout()" class="logout-btn">
+        <span class="icon">🚪</span> Déconnexion
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="content-header">
+      <div class="user-welcome">
+        <h1>Bienvenue, {{ fullName || 'Étudiant' }} 👋</h1>
+        <p>Gérez vos propositions de projets et suivez votre avancement.</p>
+      </div>
+      <div class="header-actions">
+        <div class="notif-bell">
+          <span class="icon">🔔</span>
+          <span class="pulse-dot"></span>
+        </div>
+        <div class="user-avatar" title="{{ fullName }}">
+          {{ fullName ? fullName.charAt(0).toUpperCase() : 'U' }}
+        </div>
+      </div>
+    </header>
+
+    <div class="stats-grid">
+      <div class="stat-card glass-effect">
+        <div class="stat-icon purple">📂</div>
+        <div class="stat-content">
+          <span class="stat-label">Projets Soumis</span>
+          <span class="stat-value">{{ projects.length }}</span>
+        </div>
+        <div class="stat-trend positive">Actif</div>
+      </div>
+
+      <div class="stat-card glass-effect">
+        <div class="stat-icon blue">⏳</div>
+        <div class="stat-content">
+          <span class="stat-label">En Attente</span>
+          <span class="stat-value">0</span>
+        </div>
+        <div class="stat-trend neutral">Sujet libre</div>
+      </div>
+
+      <div class="stat-card add-new-card" routerLink="/project-form">
+        <div class="plus-icon">+</div>
+        <span class="action-text">Nouveau Projet</span>
+        <p class="action-sub">Soumettre un nouveau sujet</p>
+      </div>
+    </div>
+
+    <section class="projects-wrapper">
+      <div class="section-top">
+        <h2>Mes projets</h2>
+        <span class="badge-count">{{ projects.length }} Projet(s)</span>
+      </div>
+
+      <div *ngIf="loading" class="loading-state">
+        <div class="spinner"></div>
+        <p>Chargement de vos projets...</p>
+      </div>
+
+      <div *ngIf="!loading && projects.length === 0" class="empty-state-modern">
+        <div class="illustration">
+          <div class="circle-bg"></div>
+          <span class="floating-icon">📄</span>
+        </div>
+        <h3>Votre espace est vide</h3>
+        <p>
+          Commencez par soumettre votre sujet de PFE pour recevoir les validations de
+          l'administration.
+        </p>
+        <button routerLink="/project-form" class="btn-primary-grad">
+          Créer ma première proposition
+        </button>
+      </div>
+
+      <div class="projects-grid" *ngIf="!loading && projects.length > 0">
+        <div class="project-card" *ngFor="let project of projects">
+          <div class="card-header">
+            <h3>{{ project.title }}</h3>
+            <span class="status-badge" [class.validated]="project.status === 'Validé'">
+              {{ project.status }}
+            </span>
+          </div>
+
+          <p class="project-desc">{{ project.description }}</p>
+
+          <div class="project-meta">
+            <span class="meta-tag">
+              <span class="icon">🎯</span> {{ project.participationType }}
+            </span>
+            <span class="meta-tag">
+              <span class="icon">🏢</span> {{ project.projectContext }}
+            </span>
+            <span class="meta-tag" *ngIf="project.companyName">
+              <span class="icon">🏭</span> {{ project.companyName }}
+            </span>
+          </div>
+
+          <div class="card-actions" *ngIf="project.status !== 'Validé'">
+            <a [routerLink]="['/project-form']" [queryParams]="{ id: project.id }" class="btn-edit">
+              <span class="icon">✏️</span> Modifier
+            </a>
+            <button (click)="onDeleteProject(project.id)" class="btn-delete">
+              <span class="icon">🗑️</span> Supprimer
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

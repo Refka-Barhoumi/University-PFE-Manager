@@ -1,0 +1,78 @@
+<div class="login-container">
+  <!-- Panel gauche -->
+  <div class="left-panel">
+    <div class="panel-content">
+      <div class="university-badge">
+        <span class="univ-icon">🏛️</span>
+        <span>FSTSBZ — Université de Kairouan</span>
+      </div>
+
+      <span class="panel-icon">🎓</span>
+      <h1>Espace Étudiant</h1>
+      <p>Gérez vos projets de fin d'études facilement et efficacement.</p>
+
+      <div class="features">
+        <div class="feature">
+          <span class="feature-icon">📋</span>
+          <span>Soumettez vos propositions de projet</span>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">👥</span>
+          <span>Travaillez en binôme ou seul</span>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">📊</span>
+          <span>Suivez l'état de vos projets</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formulaire -->
+  <div class="login-card">
+    <div class="card-inner">
+      <div class="logo">
+        <div class="logo-icon">🎓</div>
+        <h2>Connexion</h2>
+        <p>Bienvenue ! Connectez-vous à votre espace</p>
+      </div>
+
+      <div class="form-group">
+        <label>Email institutionnel</label>
+        <div class="input-wrapper">
+          <span class="icon">✉️</span>
+          <input
+            type="email"
+            [(ngModel)]="email"
+            placeholder="etudiant@fstsbz.u-kairouan.tn"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Mot de passe</label>
+        <div class="input-wrapper">
+          <span class="icon">🔒</span>
+          <input
+            type="password"
+            [(ngModel)]="password"
+            placeholder="••••••••"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">⚠️ {{ errorMessage }}</div>
+
+      <button (click)="onLogin()" [disabled]="loading" class="btn-login">
+        {{ loading ? 'Connexion en cours...' : 'Se connecter →' }}
+      </button>
+
+      <div class="links">
+        <a routerLink="/forgot-password">Mot de passe oublié ?</a>
+        <a routerLink="/register">Créer un compte</a>
+      </div>
+    </div>
+  </div>
+</div>

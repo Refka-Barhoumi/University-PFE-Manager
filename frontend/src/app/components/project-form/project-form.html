@@ -1,0 +1,205 @@
+<div class="form-page">
+  <div class="form-header">
+    <div class="header-content">
+      <div class="header-left">
+        <a routerLink="/dashboard" class="back-btn">← Retour</a>
+        <div class="header-title">
+          <span class="header-icon">📁</span>
+          <div>
+            <h1>{{ isEditMode ? 'Modifier le projet' : 'Soumettre un projet' }}</h1>
+            <p>FSTSBZ — Université de Kairouan</p>
+          </div>
+        </div>
+      </div>
+      <div class="progress-indicator">
+        <span class="step active">1</span>
+        <span class="line"></span>
+        <span class="step active">2</span>
+        <span class="line"></span>
+        <span class="step">3</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-body">
+    <div class="form-container">
+      <!-- Section 1 — Informations du projet -->
+      <div class="form-section">
+        <div class="section-header">
+          <span class="section-icon">📋</span>
+          <h2>Informations du projet</h2>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Titre du projet <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <span class="icon">✏️</span>
+              <input
+                type="text"
+                [(ngModel)]="project.title"
+                placeholder="Ex: Application de gestion des étudiants"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <div class="form-group full">
+            <label>Description <span class="required">*</span></label>
+            <textarea
+              [(ngModel)]="project.description"
+              placeholder="Décrivez votre projet en détail..."
+              class="form-control textarea"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label>Objectifs <span class="required">*</span></label>
+            <textarea
+              [(ngModel)]="project.objectives"
+              placeholder="Quels sont les objectifs principaux ?"
+              class="form-control textarea"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label>Technologies utilisées <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <span class="icon">💻</span>
+              <input
+                type="text"
+                [(ngModel)]="project.technologies"
+                placeholder="Ex: Angular, Spring Boot, PostgreSQL"
+                class="form-control"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2 — Type de participation -->
+      <div class="form-section">
+        <div class="section-header">
+          <span class="section-icon">👥</span>
+          <h2>Type de participation</h2>
+        </div>
+
+        <div class="radio-group">
+          <label
+            class="radio-card"
+            [class.selected]="project.participationType === 'Seul'"
+            (click)="project.participationType = 'Seul'"
+          >
+            <span class="radio-icon">🧑</span>
+            <div>
+              <strong>Seul</strong>
+              <p>Projet individuel</p>
+            </div>
+            <span class="check" *ngIf="project.participationType === 'Seul'">✅</span>
+          </label>
+
+          <label
+            class="radio-card"
+            [class.selected]="project.participationType === 'Binôme'"
+            (click)="project.participationType = 'Binôme'"
+          >
+            <span class="radio-icon">👫</span>
+            <div>
+              <strong>Binôme</strong>
+              <p>Projet en duo</p>
+            </div>
+            <span class="check" *ngIf="project.participationType === 'Binôme'">✅</span>
+          </label>
+        </div>
+
+        <div class="form-group" *ngIf="project.participationType === 'Binôme'">
+          <label>ID du deuxième étudiant</label>
+          <div class="input-wrapper">
+            <span class="icon">🔢</span>
+            <input
+              type="number"
+              [(ngModel)]="student2Id"
+              placeholder="ID du binôme"
+              class="form-control"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3 — Contexte -->
+      <div class="form-section">
+        <div class="section-header">
+          <span class="section-icon">🏢</span>
+          <h2>Contexte du projet</h2>
+        </div>
+
+        <div class="radio-group">
+          <label
+            class="radio-card"
+            [class.selected]="project.projectContext === 'Academique'"
+            (click)="project.projectContext = 'Academique'"
+          >
+            <span class="radio-icon">🎓</span>
+            <div>
+              <strong>Académique</strong>
+              <p>Projet universitaire</p>
+            </div>
+            <span class="check" *ngIf="project.projectContext === 'Academique'">✅</span>
+          </label>
+
+          <label
+            class="radio-card"
+            [class.selected]="project.projectContext === 'Entreprise'"
+            (click)="project.projectContext = 'Entreprise'"
+          >
+            <span class="radio-icon">🏭</span>
+            <div>
+              <strong>Entreprise</strong>
+              <p>Projet en milieu professionnel</p>
+            </div>
+            <span class="check" *ngIf="project.projectContext === 'Entreprise'">✅</span>
+          </label>
+        </div>
+
+        <div *ngIf="project.projectContext === 'Entreprise'" class="enterprise-fields">
+          <div class="form-group">
+            <label>Nom de l'entreprise</label>
+            <div class="input-wrapper">
+              <span class="icon">🏢</span>
+              <input
+                type="text"
+                [(ngModel)]="project.companyName"
+                placeholder="Nom de l'entreprise"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Encadrant entreprise</label>
+            <div class="input-wrapper">
+              <span class="icon">👔</span>
+              <input
+                type="text"
+                [(ngModel)]="project.companySupervisor"
+                placeholder="Nom de l'encadrant"
+                class="form-control"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">⚠️ {{ errorMessage }}</div>
+      <div class="success-message" *ngIf="successMessage">✅ {{ successMessage }}</div>
+
+      <div class="form-actions">
+        <a routerLink="/dashboard" class="btn-cancel">Annuler</a>
+        <button (click)="onSubmit()" [disabled]="loading" class="btn-submit">
+          {{ loading ? 'Envoi...' : isEditMode ? 'Mettre à jour →' : 'Soumettre →' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
