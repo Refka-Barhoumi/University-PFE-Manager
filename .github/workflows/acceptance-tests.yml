@@ -45,13 +45,15 @@ jobs:
 
       - name: Install Frontend dependencies
         working-directory: frontend
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Start Frontend
         working-directory: frontend
         run: ng serve &
-        env:
-          CI: true
+
+      - name: Give execute permission to mvnw
+        working-directory: backend
+        run: chmod +x mvnw
 
       - name: Start Backend
         working-directory: backend
@@ -61,12 +63,16 @@ jobs:
           SPRING_DATASOURCE_USERNAME: postgres
           SPRING_DATASOURCE_PASSWORD: root
 
-      - name: Wait for services
-        run: sleep 30
+      - name: Wait for services to start
+        run: sleep 40
 
       - name: Run Acceptance Tests
         working-directory: backend
         run: ./mvnw test -Dtest=RunCucumberTest
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/pf_tp
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: root
 
       - name: Upload Test Report
         uses: actions/upload-artifact@v4
