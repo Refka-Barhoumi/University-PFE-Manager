@@ -1,20 +1,19 @@
-# language: fr
-Fonctionnalité: Connexion étudiant
-  En tant qu'étudiant de FSTSBZ
-  Je veux me connecter avec mon email institutionnel
-  Afin d'accéder à mon espace de gestion des PFE
+Feature: Student Login
+  As a student of FSTSBZ
+  I want to login with my institutional email
+  In order to access my PFE management space
 
-  Scénario: Connexion réussie avec un email institutionnel valide
-    Étant donné que je suis sur la page de connexion
-    Quand je saisis l'email "ahmed@fstsbz.u-kairouan.tn"
-    Et je saisis le mot de passe "123456"
-    Et je clique sur "Se connecter"
-    Alors je suis redirigé vers le tableau de bord
-    Et je vois le message "Bienvenue"
+  Scenario: Successful login with valid institutional email
+    Given que je suis sur la page de connexion
+    When je saisis l'email "ahmed@fstsbz.u-kairouan.tn"
+    And je saisis le mot de passe "123456"
+    And je clique sur "Se connecter"
+    Then je suis redirigé vers le tableau de bord
+    And je vois le message "Bienvenue"
 
-  Scénario: Connexion échouée avec un email non institutionnel
-    Étant donné que je suis sur la page de connexion
-    Quand je saisis l'email "test@gmail.com"
-    Et je saisis le mot de passe "123456"
-    Et je clique sur "Se connecter"
-    Alors je vois un message d'erreur
+  Scenario: Failed login with non-institutional email
+    Given que je suis sur la page de connexion
+    When je saisis l'email "test@gmail.com"
+    And je saisis le mot de passe "123456"
+    And je clique sur "Se connecter"
+    Then je vois un message d'erreur

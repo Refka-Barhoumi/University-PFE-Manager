@@ -2,7 +2,7 @@ package com.example.backend.stepdefinitions;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import io.cucumber.java.fr.*;
+import io.cucumber.java.en.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -28,12 +28,12 @@ public class LoginSteps {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    @Étant_donné("que je suis sur la page de connexion")
+    @Given("que je suis sur la page de connexion")
     public void je_suis_sur_la_page_de_connexion() {
         driver.get("http://localhost:4200/login");
     }
 
-    @Quand("je saisis l'email {string}")
+    @When("je saisis l'email {string}")
     public void je_saisis_email(String email) {
         WebElement emailField = wait.until(
             ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[type='email']"))
@@ -42,7 +42,7 @@ public class LoginSteps {
         emailField.sendKeys(email);
     }
 
-    @Et("je saisis le mot de passe {string}")
+    @And("je saisis le mot de passe {string}")
     public void je_saisis_mot_de_passe(String password) {
         WebElement passwordField = driver.findElement(
             By.cssSelector("input[type='password']")
@@ -51,19 +51,19 @@ public class LoginSteps {
         passwordField.sendKeys(password);
     }
 
-    @Et("je clique sur {string}")
+    @And("je clique sur {string}")
     public void je_clique_sur(String bouton) {
         WebElement btn = driver.findElement(By.cssSelector(".btn-login"));
         btn.click();
     }
 
-    @Alors("je suis redirigé vers le tableau de bord")
+    @Then("je suis redirigé vers le tableau de bord")
     public void je_suis_redirige_vers_dashboard() {
         wait.until(ExpectedConditions.urlContains("/dashboard"));
         assertTrue(driver.getCurrentUrl().contains("/dashboard"));
     }
 
-    @Et("je vois le message {string}")
+    @And("je vois le message {string}")
     public void je_vois_le_message(String message) {
         wait.until(ExpectedConditions.presenceOfElementLocated(
             By.xpath("//*[contains(text(),'" + message + "')]")
@@ -71,7 +71,7 @@ public class LoginSteps {
         assertTrue(driver.getPageSource().contains(message));
     }
 
-    @Alors("je vois un message d'erreur")
+    @Then("je vois un message d'erreur")
     public void je_vois_message_erreur() {
         wait.until(ExpectedConditions.presenceOfElementLocated(
             By.cssSelector(".error-message")
